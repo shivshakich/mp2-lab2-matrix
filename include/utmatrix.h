@@ -62,6 +62,12 @@ public:
 template <class ValType>
 TVector<ValType>::TVector(int s, int si)
 {
+	//Новый код
+	if (s<0 || s > MAX_VECTOR_SIZE)
+		throw s;
+	Size = s;
+	pVector = new ValType[Size];
+
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> //конструктор копирования
