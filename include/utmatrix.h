@@ -64,7 +64,7 @@ TVector<T>::TVector(int s, int si)
 {
 	if (s <= 0 || s > MAX_VECTOR_SIZE)
 		throw s;
-	if (si <= 0)
+	if (si < 0)
 		throw si;
 
 	pVector = new T[s];
@@ -248,6 +248,7 @@ public:
 template <class T>
 TMatrix<T>::TMatrix(int s): TVector<TVector<T> >(s)
 {
+
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // конструктор копирования
