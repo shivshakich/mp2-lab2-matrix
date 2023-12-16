@@ -231,6 +231,9 @@ public:
 	TMatrix  operator+ (const TMatrix& mt);        // сложение
 	TMatrix  operator- (const TMatrix& mt);        // вычитание
 
+	//УМНОЖЕНИЕ
+	TMatrix	 operator* (const TMatrix& mt);
+
 	// ввод / вывод
 	friend istream& operator>>(istream& in, TMatrix& mt)
 	{
@@ -328,6 +331,34 @@ TMatrix<T> TMatrix<T>::operator-(const TMatrix<T>& mt)
 
 	return TVector<TVector<T>>::operator-(mt);
 } /*-------------------------------------------------------------------------*/
+
+template <class T>	// УМНОЖЕНИЕ ВЕРХНЕТРЕУГОЛНЫХ МАТРИЦ
+TMatrix<T> TMatrix<T>::operator*(const TMatrix<T>& mt) {
+	TMatrix<T> res(this->Size);		// верхнетреугольная матрица
+
+	const int n = res.Size;		// res - матрица n*n
+	
+	for (int line = 0; line < n; ++line) {
+		for (int column = line; column < n; ++column) {
+			T elem = 0;
+
+			// рассаматриваем элементы такие, что line <= column; при line > column элемент гарантировано равен 0
+
+			int i = line;
+
+			// 1 - ограниченность матрицей 
+			// 2, 3 - условия, при которых line <= i <= column
+			while (i < n && line <= i && i <= column) {	
+				elem += *this[line][i] * mt[i][column];
+				++i;
+			}
+
+			res[line][column] = elem;
+		}
+	}
+
+	return res;
+}
 
 // TVector О3 Л2 П4 С6
 // TMatrix О2 Л2 П3 С3
