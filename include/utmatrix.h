@@ -209,7 +209,8 @@ T TVector<T>::operator*(const TVector<T>& v)
 		throw Size, StartIndex;
 
 	T res = this->pVector[0] * v.pVector[0];
-	for (int i = 1; i < res.Size; ++i)
+
+	for (int i = 1; i < Size; ++i)
 		res += this->pVector[i] * v.pVector[i];
 
 	return res;
@@ -269,7 +270,18 @@ TMatrix<T>::TMatrix(const TVector<TVector<T> >& mt) : TVector<TVector<T> >(mt) {
 template <class T> // сравнение
 bool TMatrix<T>::operator==(const TMatrix<T>& mt) const
 {
-	return (*this == mt);
+	bool res = (this == &mt);
+
+	if (res == 0 && Size == mt.Size) {
+		for (int i = 0; i < Size; ++i) {
+			res = this->pVector[i] == mt.pVector[i];
+
+			if (res == 0)
+				break;
+		}
+	}
+
+	return res;
 } /*-------------------------------------------------------------------------*/
 
 template <class T> // сравнение
